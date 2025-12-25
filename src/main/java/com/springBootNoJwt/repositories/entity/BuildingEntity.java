@@ -1,17 +1,20 @@
 package com.springBootNoJwt.repositories.entity;
 
+import java.util.List;
+
 public class BuildingEntity {
-	private String houseId;
+	private String id;
 	private String name;
 	private String ward;
 	private String street;
+	private String districtId;
+	private DistrictEntity district;
 	private String structure;
 	private int basementQuantity;
 	private int floorArea;
 	private String direction;
 	private String hang;
-	private String rentalArea;
-	private String rentalPrice;
+	private int rentalPrice;
 	private String priceDescription;
 	private int serviceFee;
 	private int carFees;
@@ -27,25 +30,57 @@ public class BuildingEntity {
 	private int brokerageFees;
 	private String buildingType;
 	private String note;
+	private String rentTypeCode;
+	private RentTypeEntity rentType;
+	private List<Integer> rentAreas;
 
-	public BuildingEntity() {}
+	public BuildingEntity() {
+		super();
+		this.id = "";
+		this.name = "";
+		this.ward = "";
+		this.street = "";
+		this.districtId = "";
+		this.structure = "";
+		this.basementQuantity = 0;
+		this.floorArea = 0;
+		this.direction = "";
+		this.hang = "";
+		this.rentalPrice = 0;
+		this.priceDescription = "";
+		this.serviceFee = 0;
+		this.carFees = 0;
+		this.motorcycleFee = 0;
+		this.overtimeFee = 0;
+		this.electricityBill = 0;
+		this.deposit = 0;
+		this.pay = 0;
+		this.rentalPeriod = 0;
+		this.decoratorTime = 0;
+		this.managerName = "";
+		this.managerPhone = "";
+		this.brokerageFees = 0;
+		this.buildingType = "";
+		this.note = "";
+		this.rentTypeCode = "";
+	}
 
-	public BuildingEntity(String houseId, String name, String ward, String street, String structure, int basementQuantity,
-			int floorArea, String direction, String hang, String rentalArea, String rentalPrice,
+	public BuildingEntity(String id, String name, String ward, String street, String districtId, String structure, int basementQuantity,
+			int floorArea, String direction, String hang, int rentalPrice,
 			String priceDescription, int serviceFee, int carFees, int motorcycleFee, int overtimeFee,
 			int electricityBill, int deposit, int pay, int rentalPeriod, int decoratorTime, String managerName,
-			String managerPhone, int brokerageFees, String buildingType, String note) {
+			String managerPhone, int brokerageFees, String buildingType, String note, String rentTypeCode) {
 		super();
-		this.houseId = houseId;
+		this.id = id;
 		this.name = name;
 		this.ward = ward;
 		this.street = street;
+		this.districtId = districtId;
 		this.structure = structure;
 		this.basementQuantity = basementQuantity;
 		this.floorArea = floorArea;
 		this.direction = direction;
 		this.hang = hang;
-		this.rentalArea = rentalArea;
 		this.rentalPrice = rentalPrice;
 		this.priceDescription = priceDescription;
 		this.serviceFee = serviceFee;
@@ -62,14 +97,15 @@ public class BuildingEntity {
 		this.brokerageFees = brokerageFees;
 		this.buildingType = buildingType;
 		this.note = note;
+		this.rentTypeCode = rentTypeCode;
 	}
 
-	public String getHouseId() {
-		return houseId;
+	public String getId() {
+		return id;
 	}
 
-	public void setHouseId(String houseId) {
-		this.houseId = houseId;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -94,6 +130,22 @@ public class BuildingEntity {
 
 	public void setStreet(String street) {
 		this.street = street;
+	}
+	
+	public String getDistrictId() {
+		return districtId;
+	}
+
+	public void setDistrictId(String districtId) {
+		this.districtId = districtId;
+	}
+
+	public DistrictEntity getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(DistrictEntity district) {
+		this.district = district;
 	}
 
 	public String getStructure() {
@@ -136,19 +188,11 @@ public class BuildingEntity {
 		this.hang = hang;
 	}
 
-	public String getRentalArea() {
-		return rentalArea;
-	}
-
-	public void setRentalArea(String rentalArea) {
-		this.rentalArea = rentalArea;
-	}
-
-	public String getRentalPrice() {
+	public int getRentalPrice() {
 		return rentalPrice;
 	}
 
-	public void setRentalPrice(String rentalPrice) {
+	public void setRentalPrice(int rentalPrice) {
 		this.rentalPrice = rentalPrice;
 	}
 
@@ -270,5 +314,29 @@ public class BuildingEntity {
 
 	public void setNote(String note) {
 		this.note = note;
+	}
+
+	public String getRentTypeCode() {
+		return rentTypeCode;
+	}
+
+	public void setRentTypeCode(String rentTypeCode) {
+		this.rentTypeCode = rentTypeCode;
+	}
+
+	public RentTypeEntity getRentType() {
+		return rentType;
+	}
+
+	public void setRentType(RentTypeEntity rentType) {
+		this.rentType = rentType;
+	}
+
+	public List<Integer> getRentAreas() {
+		return rentAreas;
+	}
+
+	public void setRentAreas(List<Integer> rentAreas) {
+		this.rentAreas = rentAreas;
 	}
 }

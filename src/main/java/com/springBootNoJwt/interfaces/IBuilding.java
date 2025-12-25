@@ -1,7 +1,7 @@
 package com.springBootNoJwt.interfaces;
 
 public class IBuilding {
-	private String houseId;
+	private String id;
 	private String name;
 	private String ward;
 	private String street;
@@ -10,7 +10,6 @@ public class IBuilding {
 	private int floorArea;
 	private String direction;
 	private String hang;
-	private String rentalArea;
 	private String rentalPrice;
 	private String priceDescription;
 	private int serviceFee;
@@ -30,13 +29,13 @@ public class IBuilding {
 	
 	public IBuilding() {}
 	
-	public IBuilding(String houseId, String name, String ward, String street, String structure, int basementQuantity,
-			int floorArea, String direction, String hang, String rentalArea, String rentalPrice,
+	public IBuilding(String id, String name, String ward, String street, String structure, int basementQuantity,
+			int floorArea, String direction, String hang, String rentalPrice,
 			String priceDescription, int serviceFee, int carFees, int motorcycleFee, int overtimeFee,
 			int electricityBill, int deposit, int pay, int rentalPeriod, int decoratorTime, String managerName,
 			String managerPhone, int brokerageFees, String buildingType, String note) {
 		super();
-		this.houseId = houseId;
+		this.id = id;
 		this.name = name;
 		this.ward = ward;
 		this.street = street;
@@ -45,7 +44,6 @@ public class IBuilding {
 		this.floorArea = floorArea;
 		this.direction = direction;
 		this.hang = hang;
-		this.rentalArea = rentalArea;
 		this.rentalPrice = rentalPrice;
 		this.priceDescription = priceDescription;
 		this.serviceFee = serviceFee;
@@ -64,12 +62,12 @@ public class IBuilding {
 		this.note = note;
 	}
 
-	public String getHouseId() {
-		return houseId;
+	public String getId() {
+		return id;
 	}
 	
-	public void setHouseId(String houseId) {
-		this.houseId = houseId;
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 	public String getName() {
@@ -134,14 +132,6 @@ public class IBuilding {
 	
 	public void setHang(String hang) {
 		this.hang = hang;
-	}
-	
-	public String getRentalArea() {
-		return rentalArea;
-	}
-	
-	public void setRentalArea(String rentalArea) {
-		this.rentalArea = rentalArea;
 	}
 	
 	public String getRentalPrice() {

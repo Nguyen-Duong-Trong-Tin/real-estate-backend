@@ -3,8 +3,8 @@ package com.springBootNoJwt.services;
 import java.util.List;
 import java.util.Map;
 
-import com.springBootNoJwt.dtos.buildings.FindBuildingsResponseDto;
+import com.springBootNoJwt.dtos.buildings.BuildingResponseDto;
 
 public interface BuildingService {
-	List<FindBuildingsResponseDto> find(Map<String, String> query);
+	List<BuildingResponseDto> find(Map<String, String> query);
 }

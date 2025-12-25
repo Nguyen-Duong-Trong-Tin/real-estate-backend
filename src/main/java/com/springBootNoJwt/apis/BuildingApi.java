@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springBootNoJwt.dtos.CreateBuildingDto;
-import com.springBootNoJwt.dtos.buildings.FindBuildingsResponseDto;
+import com.springBootNoJwt.dtos.buildings.BuildingResponseDto;
 import com.springBootNoJwt.exceptions.InvalidDataException;
 import com.springBootNoJwt.services.BuildingService;
 
@@ -38,10 +38,8 @@ public class BuildingApi {
 	}
 
 	@GetMapping
-	public List<FindBuildingsResponseDto> findBuildings(@RequestParam Map<String, String> query) {
-		System.out.println(this.buildingService);
-		
-		List<FindBuildingsResponseDto> buildings = this.buildingService.find(query);
+	public List<BuildingResponseDto> findBuildings(@RequestParam Map<String, String> query) {
+		List<BuildingResponseDto> buildings = this.buildingService.find(query);
 		return buildings;
 	}
 
