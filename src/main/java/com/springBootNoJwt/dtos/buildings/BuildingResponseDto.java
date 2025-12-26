@@ -16,7 +16,6 @@ public class BuildingResponseDto {
 	private String managerName;
 	private String managerPhone;
 	private int floorArea;
-	private int rentalPrice;
 	private int serviceFee;
 	private String rentTypeCode;
 	private RentTypeResponseDto rentType;
@@ -33,14 +32,13 @@ public class BuildingResponseDto {
 		this.managerName = "";
 		this.managerPhone = "";
 		this.floorArea = 0;
-		this.rentalPrice = 0;
 		this.serviceFee = 0;
 		this.rentTypeCode = "";
 	}
 
 	public BuildingResponseDto(String id, String name, String street, String ward, String districtId,
-			int numberOfBasement, String managerName, String managerPhone, int floorArea,
-			int rentalPrice, int serviceFee, String rentTypeCode) {
+			int numberOfBasement, String managerName, String managerPhone, int floorArea, int serviceFee,
+			String rentTypeCode) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -51,7 +49,6 @@ public class BuildingResponseDto {
 		this.managerName = managerName;
 		this.managerPhone = managerPhone;
 		this.floorArea = floorArea;
-		this.rentalPrice = rentalPrice;
 		this.serviceFee = serviceFee;
 		this.rentTypeCode = rentTypeCode;
 	}
@@ -134,14 +131,6 @@ public class BuildingResponseDto {
 
 	public void setFloorArea(int floorArea) {
 		this.floorArea = floorArea;
-	}
-
-	public int getRentalPrice() {
-		return rentalPrice;
-	}
-
-	public void setRentalPrice(int rentalPrice) {
-		this.rentalPrice = rentalPrice;
 	}
 
 	public int getServiceFee() {

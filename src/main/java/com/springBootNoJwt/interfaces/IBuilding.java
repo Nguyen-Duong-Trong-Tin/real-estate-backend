@@ -10,8 +10,6 @@ public class IBuilding {
 	private int floorArea;
 	private String direction;
 	private String hang;
-	private String rentalPrice;
-	private String priceDescription;
 	private int serviceFee;
 	private int carFees;
 	private int motorcycleFee;
@@ -26,12 +24,13 @@ public class IBuilding {
 	private int brokerageFees;
 	private String buildingType;
 	private String note;
-	
-	public IBuilding() {}
-	
+
+	public IBuilding() {
+	}
+
 	public IBuilding(String id, String name, String ward, String street, String structure, int basementQuantity,
-			int floorArea, String direction, String hang, String rentalPrice,
-			String priceDescription, int serviceFee, int carFees, int motorcycleFee, int overtimeFee,
+			int floorArea, String direction, String hang,
+			int serviceFee, int carFees, int motorcycleFee, int overtimeFee,
 			int electricityBill, int deposit, int pay, int rentalPeriod, int decoratorTime, String managerName,
 			String managerPhone, int brokerageFees, String buildingType, String note) {
 		super();
@@ -44,8 +43,6 @@ public class IBuilding {
 		this.floorArea = floorArea;
 		this.direction = direction;
 		this.hang = hang;
-		this.rentalPrice = rentalPrice;
-		this.priceDescription = priceDescription;
 		this.serviceFee = serviceFee;
 		this.carFees = carFees;
 		this.motorcycleFee = motorcycleFee;
@@ -65,199 +62,183 @@ public class IBuilding {
 	public String getId() {
 		return id;
 	}
-	
+
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String getWard() {
 		return ward;
 	}
-	
+
 	public void setWard(String ward) {
 		this.ward = ward;
 	}
-	
+
 	public String getStreet() {
 		return street;
 	}
-	
+
 	public void setStreet(String street) {
 		this.street = street;
 	}
-	
+
 	public String getStructure() {
 		return structure;
 	}
-	
+
 	public void setStructure(String structure) {
 		this.structure = structure;
 	}
-	
+
 	public int getBasementQuantity() {
 		return basementQuantity;
 	}
-	
+
 	public void setBasementQuantity(int basementQuantity) {
 		this.basementQuantity = basementQuantity;
 	}
-	
+
 	public int getFloorArea() {
 		return floorArea;
 	}
-	
+
 	public void setFloorArea(int floorArea) {
 		this.floorArea = floorArea;
 	}
-	
+
 	public String getDirection() {
 		return direction;
 	}
-	
+
 	public void setDirection(String direction) {
 		this.direction = direction;
 	}
-	
+
 	public String getHang() {
 		return hang;
 	}
-	
+
 	public void setHang(String hang) {
 		this.hang = hang;
 	}
-	
-	public String getRentalPrice() {
-		return rentalPrice;
-	}
-	
-	public void setRentalPrice(String rentalPrice) {
-		this.rentalPrice = rentalPrice;
-	}
-	
-	public String getPriceDescription() {
-		return priceDescription;
-	}
-	
-	public void setPriceDescription(String priceDescription) {
-		this.priceDescription = priceDescription;
-	}
-	
+
 	public int getServiceFee() {
 		return serviceFee;
 	}
-	
+
 	public void setServiceFee(int serviceFee) {
 		this.serviceFee = serviceFee;
 	}
-	
+
 	public int getCarFees() {
 		return carFees;
 	}
-	
+
 	public void setCarFees(int carFees) {
 		this.carFees = carFees;
 	}
-	
+
 	public int getMotorcycleFee() {
 		return motorcycleFee;
 	}
-	
+
 	public void setMotorcycleFee(int motorcycleFee) {
 		this.motorcycleFee = motorcycleFee;
 	}
-	
+
 	public int getOvertimeFee() {
 		return overtimeFee;
 	}
-	
+
 	public void setOvertimeFee(int overtimeFee) {
 		this.overtimeFee = overtimeFee;
 	}
-	
+
 	public int getElectricityBill() {
 		return electricityBill;
 	}
-	
+
 	public void setElectricityBill(int electricityBill) {
 		this.electricityBill = electricityBill;
 	}
-	
+
 	public int getDeposit() {
 		return deposit;
 	}
-	
+
 	public void setDeposit(int deposit) {
 		this.deposit = deposit;
 	}
-	
+
 	public int getPay() {
 		return pay;
 	}
-	
+
 	public void setPay(int pay) {
 		this.pay = pay;
 	}
-	
+
 	public int getRentalPeriod() {
 		return rentalPeriod;
 	}
-	
+
 	public void setRentalPeriod(int rentalPeriod) {
 		this.rentalPeriod = rentalPeriod;
 	}
-	
+
 	public int getDecoratorTime() {
 		return decoratorTime;
 	}
-	
+
 	public void setDecoratorTime(int decoratorTime) {
 		this.decoratorTime = decoratorTime;
 	}
-	
+
 	public String getManagerName() {
 		return managerName;
 	}
-	
+
 	public void setManagerName(String managerName) {
 		this.managerName = managerName;
 	}
-	
+
 	public String getManagerPhone() {
 		return managerPhone;
 	}
-	
+
 	public void setManagerPhone(String managerPhone) {
 		this.managerPhone = managerPhone;
 	}
-	
+
 	public int getBrokerageFees() {
 		return brokerageFees;
 	}
-	
+
 	public void setBrokerageFees(int brokerageFees) {
 		this.brokerageFees = brokerageFees;
 	}
-	
+
 	public String getBuildingType() {
 		return buildingType;
 	}
-	
+
 	public void setBuildingType(String buildingType) {
 		this.buildingType = buildingType;
 	}
-	
+
 	public String getNote() {
 		return note;
 	}
-	
+
 	public void setNote(String note) {
 		this.note = note;
 	}

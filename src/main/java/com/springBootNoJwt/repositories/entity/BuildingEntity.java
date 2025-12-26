@@ -14,8 +14,6 @@ public class BuildingEntity {
 	private int floorArea;
 	private String direction;
 	private String hang;
-	private int rentalPrice;
-	private String priceDescription;
 	private int serviceFee;
 	private int carFees;
 	private int motorcycleFee;
@@ -46,8 +44,6 @@ public class BuildingEntity {
 		this.floorArea = 0;
 		this.direction = "";
 		this.hang = "";
-		this.rentalPrice = 0;
-		this.priceDescription = "";
 		this.serviceFee = 0;
 		this.carFees = 0;
 		this.motorcycleFee = 0;
@@ -65,9 +61,10 @@ public class BuildingEntity {
 		this.rentTypeCode = "";
 	}
 
-	public BuildingEntity(String id, String name, String ward, String street, String districtId, String structure, int basementQuantity,
-			int floorArea, String direction, String hang, int rentalPrice,
-			String priceDescription, int serviceFee, int carFees, int motorcycleFee, int overtimeFee,
+	public BuildingEntity(String id, String name, String ward, String street, String districtId, String structure,
+			int basementQuantity,
+			int floorArea, String direction, String hang,
+			int serviceFee, int carFees, int motorcycleFee, int overtimeFee,
 			int electricityBill, int deposit, int pay, int rentalPeriod, int decoratorTime, String managerName,
 			String managerPhone, int brokerageFees, String buildingType, String note, String rentTypeCode) {
 		super();
@@ -81,8 +78,6 @@ public class BuildingEntity {
 		this.floorArea = floorArea;
 		this.direction = direction;
 		this.hang = hang;
-		this.rentalPrice = rentalPrice;
-		this.priceDescription = priceDescription;
 		this.serviceFee = serviceFee;
 		this.carFees = carFees;
 		this.motorcycleFee = motorcycleFee;
@@ -131,7 +126,7 @@ public class BuildingEntity {
 	public void setStreet(String street) {
 		this.street = street;
 	}
-	
+
 	public String getDistrictId() {
 		return districtId;
 	}
@@ -186,22 +181,6 @@ public class BuildingEntity {
 
 	public void setHang(String hang) {
 		this.hang = hang;
-	}
-
-	public int getRentalPrice() {
-		return rentalPrice;
-	}
-
-	public void setRentalPrice(int rentalPrice) {
-		this.rentalPrice = rentalPrice;
-	}
-
-	public String getPriceDescription() {
-		return priceDescription;
-	}
-
-	public void setPriceDescription(String priceDescription) {
-		this.priceDescription = priceDescription;
 	}
 
 	public int getServiceFee() {
