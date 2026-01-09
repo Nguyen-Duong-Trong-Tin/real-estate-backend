@@ -1,50 +1,66 @@
 package com.springBootNoJwt.repositories.impl;
 
 import java.lang.reflect.Field;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.springBootNoJwt.builders.BuildingBuilder;
-import com.springBootNoJwt.converters.BuildingConverter;
 import com.springBootNoJwt.repositories.BuildingRepository;
 import com.springBootNoJwt.repositories.entity.BuildingEntity;
-import com.springBootNoJwt.utils.JdbcUtil;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
+import jakarta.transaction.Transactional;
 
 @Repository
 public class BuildingRepositoryImpl implements BuildingRepository {
-	@Autowired
-	private BuildingConverter buildingConverter;
+	@PersistenceContext
+	private EntityManager entityManager;
+
+	@Override
+	@Transactional
+	public BuildingEntity create(BuildingEntity buildingEntity) {
+		this.entityManager.persist(buildingEntity);
+		return buildingEntity;
+	}
+
+	@Override
+	@Transactional
+	public BuildingEntity update(Long id, BuildingEntity buildingEntity) {
+		this.entityManager.merge(buildingEntity);
+		return buildingEntity;
+	}
+
+	@Override
+	@Transactional
+	public void delete(Long id) {
+		BuildingEntity buildingEntity = this.entityManager.find(BuildingEntity.class, id);
+		if (buildingEntity == null) {
+			throw new EntityNotFoundException("Building not found");
+		}
+
+		this.entityManager.remove(buildingEntity);
+	}
 
 	private void findBuiltSelect(StringBuilder sql) {
-		sql.append("SELECT buildings.*")
-				.append(", rent_types.id AS rent_type_id")
-				.append(", rent_types.name AS rent_type_name")
-				.append(", districts.name AS district_name")
-				.append(", districts.description AS district_description")
-				.append(", GROUP_CONCAT(rent_areas.value) AS rent_areas")
-				.append(" FROM buildings");
+		sql.append("SELECT DISTINCT buildings.* FROM buildings");
 	}
 
 	private void findBuiltJoin(StringBuilder sql) {
-		sql.append(" INNER JOIN rent_types ON buildings.rentTypeCode = rent_types.code");
-		sql.append(" INNER JOIN districts ON buildings.districtId = districts.id");
-		sql.append(" LEFT JOIN rent_areas ON buildings.id = rent_areas.building_id");
+		sql.append(" INNER JOIN rentTypes ON buildings.rentTypeId = rentTypes.id");
+		sql.append(" INNER JOIN rentAreas ON rentAreas.buildingId = buildings.id");
 	}
 
 	private void findBuiltWhereNormal(StringBuilder sql, BuildingBuilder buildingBuilder) {
 		Set<String> specialProperties = new HashSet<>(Arrays.asList(
-				"districtId", "employeeId", "rentTypes", "rentAreaFrom", "rentAreaTo",
+				"hang", "districtId", "employeeId", "rentTypes", "rentAreaFrom", "rentAreaTo",
 				"rentPriceFrom", "rentPriceTo", "floorAreaFrom", "floorAreaTo"));
 
 		sql.append(" WHERE 1");
@@ -77,15 +93,20 @@ public class BuildingRepositoryImpl implements BuildingRepository {
 	}
 
 	private void findBuiltWhereSpecial(StringBuilder sql, BuildingBuilder buildingBuilder) {
-		String districtId = buildingBuilder.getDistrictId();
-		String employeeId = buildingBuilder.getEmployeeId();
+		String hang = buildingBuilder.getHang();
+		Long districtId = buildingBuilder.getDistrictId();
+		Long employeeId = buildingBuilder.getEmployeeId();
 		List<String> rentTypes = buildingBuilder.getRentTypes();
-		Integer rentAreaFrom = buildingBuilder.getRentAreaFrom();
-		Integer rentAreaTo = buildingBuilder.getRentAreaTo();
+		Long rentAreaFrom = buildingBuilder.getRentAreaFrom();
+		Long rentAreaTo = buildingBuilder.getRentAreaTo();
 		Long rentPriceFrom = buildingBuilder.getRentPriceFrom();
 		Long rentPriceTo = buildingBuilder.getRentPriceTo();
 		Integer floorAreaFrom = buildingBuilder.getFloorAreaFrom();
 		Integer floorAreaTo = buildingBuilder.getFloorAreaTo();
+
+		if (hang != null) {
+			sql.append(" AND buildings.class LIKE '%").append(hang).append("%'");
+		}
 
 		if (districtId != null) {
 			sql.append(" AND buildings.districtId = ").append(districtId);
@@ -99,30 +120,33 @@ public class BuildingRepositoryImpl implements BuildingRepository {
 			String rentTypeList = rentTypes.stream()
 					.map(rentType -> "'" + rentType + "'")
 					.collect(Collectors.joining(", "));
-			sql.append(" AND buildings.rentTypeCode IN (").append(rentTypeList).append(")");
+
+			sql.append(" AND rentTypes.code IN (").append(rentTypeList).append(")");
 		}
 
 		if (rentAreaFrom != null) {
 			sql.append(
-					" AND EXISTS (SELECT 1 FROM rent_areas WHERE rent_areas.building_id = buildings.id AND rent_areas.value >= ")
+					" AND EXISTS (SELECT 1 FROM rentAreas WHERE rentAreas.buildingId = buildings.id AND rentAreas.value >= ")
 					.append(rentAreaFrom).append(")");
 		}
 		if (rentAreaTo != null) {
 			sql.append(
-					" AND EXISTS (SELECT 1 FROM rent_areas WHERE rent_areas.building_id = buildings.id AND rent_areas.value <= ")
+					" AND EXISTS (SELECT 1 FROM rentAreas WHERE rentAreas.buildingId = buildings.id AND rentAreas.value <= ")
 					.append(rentAreaTo).append(")");
 		}
 
 		if (rentPriceFrom != null) {
 			sql.append(
-					" AND EXISTS (SELECT 1 FROM rent_areas WHERE rent_areas.building_id = buildings.id AND rent_areas.price >= ")
+					" AND EXISTS (SELECT 1 FROM rentAreas WHERE rentAreas.buildingId = buildings.id AND rentAreas.price >= ")
 					.append(rentPriceFrom).append(")");
 		}
 		if (rentPriceTo != null) {
 			sql.append(
-					" AND EXISTS (SELECT 1 FROM rent_areas WHERE rent_areas.building_id = buildings.id AND rent_areas.price <= ")
+					" AND EXISTS (SELECT 1 FROM rentAreas WHERE rentAreas.buildingId = buildings.id AND rentAreas.price <= ")
 					.append(rentPriceTo).append(")");
 		}
+
+		System.out.println("Floor Area From: " + floorAreaFrom);
 
 		if (floorAreaFrom != null) {
 			sql.append(" AND buildings.floorArea >= ").append(floorAreaFrom);
@@ -133,37 +157,35 @@ public class BuildingRepositoryImpl implements BuildingRepository {
 		}
 	}
 
-
-	private void findBuiltGroupBy(StringBuilder sql) {
-		sql.append(" GROUP BY buildings.id");
-	}
-
 	@Override
 	public List<BuildingEntity> find(BuildingBuilder buildingBuilder) {
-		StringBuilder sql = new StringBuilder("");
+		// jpql
+		// StringBuilder jpql = new StringBuilder(
+		// "SELECT building FROM BuildingEntity building WHERE 1=1 AND building.name
+		// LIKE '%building%'");
+		// TypedQuery<BuildingEntity> query = entityManager.createQuery(jpql.toString(),
+		// BuildingEntity.class);
 
-		findBuiltSelect(sql);
-		findBuiltJoin(sql);
-		findBuiltWhereNormal(sql, buildingBuilder);
-		findBuiltWhereSpecial(sql, buildingBuilder);
-		findBuiltGroupBy(sql);
+		// sql
+		StringBuilder sql = new StringBuilder("");
+		this.findBuiltSelect(sql);
+		this.findBuiltJoin(sql);
+		this.findBuiltWhereNormal(sql, buildingBuilder);
+		this.findBuiltWhereSpecial(sql, buildingBuilder);
 
 		System.out.println(sql.toString());
 
-		List<BuildingEntity> buildings = new ArrayList<BuildingEntity>();
+		Query query = entityManager.createNativeQuery(sql.toString(),
+				BuildingEntity.class);
 
-		try (Connection conn = JdbcUtil.getConnection();
-				Statement stmt = conn.createStatement();
-				ResultSet rs = stmt.executeQuery(sql.toString());) {
-			while (rs.next()) {
-				BuildingEntity building = buildingConverter.toBuildingEntity(rs);
-				buildings.add(building);
-			}
-		} catch (SQLException error) {
-			error.printStackTrace();
-			throw new RuntimeException("Database error: " + error.getMessage());
-		}
+		@SuppressWarnings("unchecked")
+		List<BuildingEntity> buildings = query.getResultList();
 
 		return buildings;
+	}
+
+	@Override
+	public BuildingEntity findById(Long id) {
+		return this.entityManager.find(BuildingEntity.class, id);
 	}
 }

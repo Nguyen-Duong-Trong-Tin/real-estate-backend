@@ -1,10 +1,4 @@
-package com.springBootNoJwt.dtos.buildings;
-
-import java.util.List;
-
-import com.springBootNoJwt.repositories.entity.DistrictEntity;
-import com.springBootNoJwt.repositories.entity.RentAreaEntity;
-import com.springBootNoJwt.repositories.entity.RentTypeEntity;
+package com.springBootNoJwt.dtos.buildings.create;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,8 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class BuildingResponseDto {
-  private Long id;
+public class BuildingCreateDto {
   private String name;
   private String ward;
   private String street;
@@ -29,8 +22,8 @@ public class BuildingResponseDto {
   private String hang;
   private Integer serviceFee;
   private Integer carFees;
-  private Integer motorcycleFee;
-  private Integer overtimeFee;
+  private Integer motorbikeFees;
+  private Integer overtimeFees;
   private Integer electricityBill;
   private Integer deposit;
   private Integer pay;
@@ -41,7 +34,6 @@ public class BuildingResponseDto {
   private Integer brokerageFees;
   private String buildingType;
   private String note;
-  private DistrictEntity district;
-  private RentTypeEntity rentType;
-  private List<RentAreaEntity> rentAreas;
+  private Long districtId;
+  private Long rentTypeId;
 }
